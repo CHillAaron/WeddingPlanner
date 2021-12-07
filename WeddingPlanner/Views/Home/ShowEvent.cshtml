@@ -1,0 +1,23 @@
+﻿@model Event
+@{
+}
+
+<div class="d-flex justify-content-around">
+    <h1>@Model.WedderOne and @Model.Weddertwo</h1>
+    <div>
+        <a href="/Success">Dashboard</a>
+        <a href="/LogOut" class="btn btn-dark">Logout</a>
+    </div>
+</div>
+
+<h3>Date: @Model.Date.ToLongDateString() at @Model.Date.ToLongTimeString()</h3>
+
+<ul>
+    <h2>Guests:</h2>
+    @foreach(RSVp g in Model.GuestList)
+    {
+        <li class="list-group-item">
+            @g.Guest.FirstName @g.Guest.LastName
+        </li>
+    }
+</ul>

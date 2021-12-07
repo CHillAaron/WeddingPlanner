@@ -1,0 +1,45 @@
+﻿@model List<Event>
+@{
+}
+<p>Welcome @ViewBag.User.FirstName @ViewBag.User.LastName</p>
+<a href="/LogOut" class="btn btn-dark">Logout</a>
+<a href="/new/NewEvent" class="btn btn-dark">Create New Event</a>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Wedding</th>
+            <th>Date</th>
+            <th>Guest</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Event e in Model)
+            {
+                <tr>
+                    <td><a href="/EventDetail/@e.EventId">@e.WedderOne and @e.Weddertwo</a> </td>
+                    <td>@e.Date.ToLongDateString() @e.Date.ToLongTimeString() </td>
+                    <td>@e.GuestList.Count</td>
+                    <td>
+                        @if (e.Creator.UserId == ViewBag.User.UserId)
+                        {
+                            <a href="/Delete/@e.EventId" class="btn btn-danger">Cancel</a>
+                        }
+                        else
+                        {
+                            if (e.GuestList.Any(r => r.UserId == ViewBag.User.UserId))
+                            {
+                                <a href="/Leave/@e.EventId/@ViewBag.User.UserId" class="btn-warning">Un-RSVP</a>
+                            }
+                            else
+                            {
+                                <a href="/Join/@e.EventId/@ViewBag.User.UserId" class="btn-info">RSVP</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>
